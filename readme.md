@@ -1,7 +1,7 @@
 <h2> What is this thing?</h2>
 <hr>
 <p>This is a "Battle RPG" game I'm working on for Coding Bootcamp. In it, you can choose a character, then battle the other characters</p>
-<p>You can <a href="https://gnefkow.github.io/FightRPG/">try it out here.</a></p>
+<p>You can <a href="https://gnefkow.github.io/FightRPG/" target="blank">try it out here.</a></p>
 <br>
 <br>
 
