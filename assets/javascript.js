@@ -7,6 +7,7 @@
 // DOM Elements
 var opponentPenEL
 var battlefieldEL // a variable tied to a <div id="battlefield">
+var playerSpotEL
 
 // Variables
 var Trump = "TRUMP";   // Needs to be opbect with three keys: HP, Attack Power, & Counter-attack power
@@ -26,38 +27,29 @@ var playerAP
 
 
 // ============================== NEW GAME: ============================== //
-opponentPenEl = document.getElementById("opponentsLeftSpotList"); //why can't I use this?
-
+opponentPenEl = document.getElementById("opponentsLeftSpotList");
+playerSpotEL = document.getElementById("playerSpot"); 
 
 // Initiate Game:
-function initiateGame(){
-  //Displays opponentsLeft array in the DOM - at this point, it has all 4 characters
+function initiateGame(){   //Displays opponentsLeft array in the DOM - at this point, it has all 4 characters
   for (var i = 0; i < opponentsLeft.length; i++) {
-    $( `<li id='card-${opponentsLeft[i]}' class="characterCard"> ${opponentsLeft[i]}</li>` ).appendTo( "#opponentsLeftSpotList" );
-    // $(`li`, `id="test"`).appendTo(`#opponentsLeftSpotList`);
-    //.html(opponentsLeft[i])
-    // opponentsLeft[i].attr("class", "characterCard");
-    // $(`.characterCard`).html(opponentsLeft[i]);
-    
-    // opponentsLeft[i]
+    $( `<li id='card-${opponentsLeft[i]}' class="characterCard"> ${opponentsLeft[i]}</li>` ).appendTo( opponentPenEl );
   }
-
-
- 
-  
-
-  console.log(`function initiateGame ran - but isn't written yet`)
+  console.log(`function initiateGame ran`)
+  choosePlayer();
 };
 
 //Player can choose a character:
 function choosePlayer (){
-  // moves the user's first selection to be their player.
+  $(`.characterCard`).on("click", function() {
+    $(this).appendTo( playerSpotEL );
+    console.log(`The player chose a card`)
+  });
   // sets the character == player
   // sets playerHP == character's HP
   // sets playerAP == character's AP
   // Remove character from opponentsLeft array
-  // run battle();
-  console.log(`function choosePlayer ran - but isn't written yet`)
+  battle();
 };
   
 
@@ -66,7 +58,7 @@ function choosePlayer (){
 
 // ======================================== BATTLE ======================================== //
  
-function battle(){};
+function battle(){
     // -------------------- CHOOSE OPPONENT -------------------- //
     var opponent
     var opponentHP
@@ -97,7 +89,7 @@ function battle(){};
         // removes the opponent from the battleFieldEl
         // run: checkOpponentsLeft();
 
-
+      };
 
 // =|=|=|=|=|=|=|=|=|=|=|=|=|=|=| /BATTLE =|=|=|=|=|=|=|=|=|=|=|=|=|=|=| //
 
