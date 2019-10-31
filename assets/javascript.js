@@ -4,11 +4,34 @@
 //create HTML FIle
 
 
-// DOM Elements
-var opponentPenEL
-var battlefieldEL
+// DOM Elements: Battle Fields
 var playerSpotEL
-var playerCountsEL
+  playerSpotEL = document.getElementById("playerSpot"); 
+var opponentPenEL
+  opponentPenEl = document.getElementById("opponentsLeftSpotList");
+var battlefieldEL
+  battlefieldEL = document.getElementById("battlefieldSpot"); 
+
+//DOM Elements: SCOREKEEPING
+var playerCounts
+    playerCounts = document.getElementById("playerCounterContainer");
+    playerCounts.style.display = "none";
+  var playerCountsEL_HP
+    playerCountsEL_HP = document.getElementById("playerHP");
+  var playerCountsEL_AP
+    playerCountsEL_AP = document.getElementById("playerAP");
+var opponentCounts
+    opponentCounts = document.getElementById("opponentCounterContainer");
+    opponentCounts.style.display = "none";
+  var opponentCountsEL_HP
+    opponentCountsEL_HP = document.getElementById("opponentHP");
+  var playerCountsEL_AP
+    opponentCountsEL_AP = document.getElementById("opponentAP");
+
+
+  
+  
+
 var opponentCountsEL
 
 
@@ -56,8 +79,9 @@ var opponent
 
 
 // ============================== NEW GAME: ============================== //
-opponentPenEl = document.getElementById("opponentsLeftSpotList");
-playerSpotEL = document.getElementById("playerSpot"); 
+
+
+
 
 
 
@@ -76,25 +100,30 @@ function choosePlayer (){
   $(`.characterCard`).on("click", function() {
     if (!playerIsSelected ) { //(IF PLAYER IS NOT SELECTED)
         $(this).appendTo( playerSpotEL );
-        // player = this.id;  //this is pulling a string with the rignt name, but... its a string
+      // The chosen character becomes var player
         player = characters[this.id];
-        console.log(`Now player is ${player}`);
         playerIsSelected = true;
-        battle();
+      //Player's HP and AP are displayed
+        playerCounts.style.display = "block";
+        $(playerCountsEL_HP).html(player.HP);
+        $(playerCountsEL_AP).html(player.AP);
+
+
+    //Selects Opponent:    
     } else if (!opponentIsSelected){ 
         $(this).appendTo( battlefieldEL );
+      // chosen enemy becomes "opponent"
         opponent = characters[this.id];
-        console.log(`The player has chosen ${opponent} as the opponent.`)
         opponentIsSelected = true;
+      //Opponent's HP and AP are displayed
+        opponentCounts.style.display = "block";
+        $(opponentCountsEL_HP).html(opponent.HP);
+        $(opponentCountsEL_AP).html(opponent.AP);
     } else {
         battle();
     }
   });
    
-  // sets playerHP == character's HP
-  // playerHP == player.HP;
-  // sets playerAP == character's AP
-  // Remove character from opponentsLeft array
 };
   
 
@@ -104,23 +133,7 @@ function choosePlayer (){
 // ======================================== BATTLE ======================================== //
  
 function battle(){
-  battlefieldEL = document.getElementById("battlefieldSpot"); 
-  
   console.log(`function battle ran`)
-
-    // -------------------- CHOOSE OPPONENT -------------------- //
-    
-
-
-    //CHOOSE ENEMY:
-
-          
-          
-          
-
-          // chosen enemy becomes "opponent"
-          // opponentHP == character's HP
-          // opponentCAP == character's CAP
           //display attack button
 
       //     attack();
