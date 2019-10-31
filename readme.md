@@ -20,3 +20,5 @@
 
 
 
+<h2> PUZZLES </h2>
+* ... no puzzles at the moment, just a lot of work ahead.

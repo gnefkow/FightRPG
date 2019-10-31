@@ -2,27 +2,56 @@
 
 //add document.ready
 //create HTML FIle
-//Link this file, jQuery, Bootstrap, and the CSS file
+
 
 // DOM Elements
 var opponentPenEL
-var battlefieldEL // a variable tied to a <div id="battlefield">
+var battlefieldEL
 var playerSpotEL
-
-// Variables
-var Trump = "TRUMP";   // Needs to be opbect with three keys: HP, Attack Power, & Counter-attack power
-var Sanders = "SANDERS"; // Needs to be opbect with three keys: HP, Attack Power, & Counter-attack power
-var Warren = "WARREN";  // Needs to be opbect with three keys: HP, Attack Power, & Counter-attack power
-var Biden = "BIDEN";   // Needs to be opbect with three keys: HP, Attack Power, & Counter-attack power
-
-var opponentsLeft = [ Trump, Sanders, Warren, Biden ];
-var player
-var playerHP
-var playerAP
+var playerCountsEL
+var opponentCountsEL
 
 
+// Character Variables
+//consider using a constructor function for this: https://javascript.info/constructor-new , https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/constructor 
+var characters = {
+  Trump : {
+    NAME: "Trump",
+    HP  : 1001,
+    AP  : 100,
+    CAP : 200,
+    alive : true
+    },  
+  Sanders : {
+    NAME: "Sanders",
+    HP  : 1000,
+    AP  : 300,
+    CAP : 200
+    }, 
+  Warren : {
+    NAME: "Warren",
+    HP  : 1000,
+    AP  : 100,
+    CAP : 200
+    }, 
+  Biden : {
+    NAME: "Biden",
+    HP  : 1000,
+    AP  : 100,
+    CAP : 200
+    }
+  } 
 
-
+//Mechanics
+var opponentsLeft = [ characters.Trump, characters.Sanders, characters.Warren, characters.Biden ];
+var player; //this automatically evaluates to false
+var playerIsSelected = false;
+var opponentIsSelected = false;
+// var playerHP
+// var playerAP
+var opponent
+// var opponentHP
+// var opponentCAP
 
 
 
@@ -30,26 +59,42 @@ var playerAP
 opponentPenEl = document.getElementById("opponentsLeftSpotList");
 playerSpotEL = document.getElementById("playerSpot"); 
 
+
+
 // Initiate Game:
 function initiateGame(){   //Displays opponentsLeft array in the DOM - at this point, it has all 4 characters
   for (var i = 0; i < opponentsLeft.length; i++) {
-    $( `<li id='card-${opponentsLeft[i]}' class="characterCard"> ${opponentsLeft[i]}</li>` ).appendTo( opponentPenEl );
+    $( `<li id='${opponentsLeft[i].NAME}' class="characterCard"> ${opponentsLeft[i].NAME}</li>` ).appendTo( opponentPenEl );
   }
   console.log(`function initiateGame ran`)
   choosePlayer();
 };
 
 //Player can choose a character:
+
 function choosePlayer (){
   $(`.characterCard`).on("click", function() {
-    $(this).appendTo( playerSpotEL );
-    console.log(`The player chose a card`)
+    if (!playerIsSelected ) { //(IF PLAYER IS NOT SELECTED)
+        $(this).appendTo( playerSpotEL );
+        // player = this.id;  //this is pulling a string with the rignt name, but... its a string
+        player = characters[this.id];
+        console.log(`Now player is ${player}`);
+        playerIsSelected = true;
+        battle();
+    } else if (!opponentIsSelected){ 
+        $(this).appendTo( battlefieldEL );
+        opponent = characters[this.id];
+        console.log(`The player has chosen ${opponent} as the opponent.`)
+        opponentIsSelected = true;
+    } else {
+        battle();
+    }
   });
-  // sets the character == player
+   
   // sets playerHP == character's HP
+  // playerHP == player.HP;
   // sets playerAP == character's AP
   // Remove character from opponentsLeft array
-  battle();
 };
   
 
@@ -59,17 +104,29 @@ function choosePlayer (){
 // ======================================== BATTLE ======================================== //
  
 function battle(){
+  battlefieldEL = document.getElementById("battlefieldSpot"); 
+  
+  console.log(`function battle ran`)
+
     // -------------------- CHOOSE OPPONENT -------------------- //
-    var opponent
-    var opponentHP
-    var opponentCAP
+    
+
 
     //CHOOSE ENEMY:
-      function selectOpponent(){}; // - moves their selection to the battlefield (battlefield can be a div tied to an element)
-              // chosen enemy becomes "opponent"
-              // opponentHP == character's HP
-              // opponentCAP == character's CAP
-              //display attack button
+
+          
+          
+          
+
+          // chosen enemy becomes "opponent"
+          // opponentHP == character's HP
+          // opponentCAP == character's CAP
+          //display attack button
+
+      //     attack();
+      //   });
+      // }; 
+              
               
 
 
@@ -77,7 +134,8 @@ function battle(){
     // --------------------    FIGHT    -------------------- //
 
     // .on(click attack button, function() {
-    function attack(){}; 
+    function attack(){
+      console.log(`the attack function ran - but it doesn't do anything yet`)}; 
         // opponentHP is reduced by playerAP
         //  is opponent dead? if (dead){ disposeBody(); } else { counterAttack(); }
 
@@ -88,7 +146,7 @@ function battle(){
       function disposeBody(){}; 
         // removes the opponent from the battleFieldEl
         // run: checkOpponentsLeft();
-
+  // selectOpponent();
       };
 
 // =|=|=|=|=|=|=|=|=|=|=|=|=|=|=| /BATTLE =|=|=|=|=|=|=|=|=|=|=|=|=|=|=| //
