@@ -28,11 +28,13 @@ var opponentCounts
   var playerCountsEL_AP
     opponentCountsEL_AP = document.getElementById("opponentAP");
 
-
+//DOM Controls
+var controlButtonsEL
+  controlButtonsEL = document.getElementById("controlButtonSpace");
   
   
 
-var opponentCountsEL
+
 
 
 // Character Variables
@@ -41,27 +43,34 @@ var characters = {
   Trump : {
     NAME: "Trump",
     HP  : 1001,
-    AP  : 100,
-    CAP : 200,
-    alive : true
+    AP  : 101,
+    CAP : 101,
+    ATTACK: "Tweet!",
+    CONTENDER : true
     },  
   Sanders : {
     NAME: "Sanders",
-    HP  : 1000,
-    AP  : 300,
-    CAP : 200
+    HP  : 2002,
+    AP  : 202,
+    CAP : 202,
+    ATTACK: "Yell!!",
+    CONTENDER: true
     }, 
   Warren : {
     NAME: "Warren",
-    HP  : 1000,
-    AP  : 100,
-    CAP : 200
+    HP  : 3003,
+    AP  : 303,
+    CAP : 303,
+    ATTACK: "Plan!!",
+    CONTENDER: true
     }, 
   Biden : {
     NAME: "Biden",
-    HP  : 1000,
-    AP  : 100,
-    CAP : 200
+    HP  : 4004,
+    AP  : 404,
+    CAP : 404,
+    ATTACK: "Tell a story!!",
+    CONTENDER: true
     }
   } 
 
@@ -81,7 +90,18 @@ var opponent
 // ============================== NEW GAME: ============================== //
 
 
+function updateOpponentHP() { $(opponentCountsEL_HP).html(opponent.HP);};
+function checkOpponent() {
+if ($(opponent.HP) > 0 ) {endgameLose();} 
+}; 
 
+function updatePlayerHP()   {$(playerCountsEL_HP).html(player.HP);};
+function checkPlayerHP() { 
+  if (player.HP > 0 ) {endgameLose();} 
+}; 
+function updatePlayerAP()   {$(playerCountsEL_AP).html(player.AP);};
+
+        
 
 
 
@@ -100,14 +120,15 @@ function choosePlayer (){
   $(`.characterCard`).on("click", function() {
     if (!playerIsSelected ) { //(IF PLAYER IS NOT SELECTED)
         $(this).appendTo( playerSpotEL );
+
       // The chosen character becomes var player
         player = characters[this.id];
         playerIsSelected = true;
+        player.CONTENDER = false;
       //Player's HP and AP are displayed
         playerCounts.style.display = "block";
-        $(playerCountsEL_HP).html(player.HP);
-        $(playerCountsEL_AP).html(player.AP);
-
+        updatePlayerHP();
+        updatePlayerAP();
 
     //Selects Opponent:    
     } else if (!opponentIsSelected){ 
@@ -117,9 +138,8 @@ function choosePlayer (){
         opponentIsSelected = true;
       //Opponent's HP and AP are displayed
         opponentCounts.style.display = "block";
-        $(opponentCountsEL_HP).html(opponent.HP);
+        updateOpponentHP();
         $(opponentCountsEL_AP).html(opponent.AP);
-    } else {
         battle();
     }
   });
@@ -134,33 +154,45 @@ function choosePlayer (){
  
 function battle(){
   console.log(`function battle ran`)
-          //display attack button
 
-      //     attack();
-      //   });
-      // }; 
-              
-              
-
-
+  //display attack button
+  $(controlButtonsEL).html( `<button type="button" class="btn btn-danger" id="attack-button">${player.ATTACK}</button>` );
+  round();
+  
+  function round() {
 
     // --------------------    FIGHT    -------------------- //
-
+    attack();
     // .on(click attack button, function() {
     function attack(){
-      console.log(`the attack function ran - but it doesn't do anything yet`)}; 
+      $(`#attack-button`).on("click", function(){
+        opponent.HP -= player.AP;
+        updateOpponentHP();
+        counterAttack();
+      })
+
+    }; 
         // opponentHP is reduced by playerAP
         //  is opponent dead? if (dead){ disposeBody(); } else { counterAttack(); }
 
-      function counterAttack(){};
+      function counterAttack(){
+        console.log(`counterAttack ran!`)
+        alert(`${opponent.NAME} used ${opponent.ATTACK}!!`);
+        player.HP -= opponent.AP;
+        updatePlayerHP();
+        checkPlayerHP();
+      };
+        
         // reduces playerHP by opponentCAP
         // run: checkPlayerHP():
         
       function disposeBody(){}; 
         // removes the opponent from the battleFieldEl
         // run: checkOpponentsLeft();
+        // count CONTENDERS - if CONTENDERS = 0, then win
   // selectOpponent();
-      };
+  }
+};
 
 // =|=|=|=|=|=|=|=|=|=|=|=|=|=|=| /BATTLE =|=|=|=|=|=|=|=|=|=|=|=|=|=|=| //
 
@@ -169,10 +201,12 @@ function battle(){
 //============================== END GAME ============================== //
 
 // -------------------- LOOSE GAME -------------------- //
-function checkPlayerHP(){console.log(`function checkPlayerHP ran - but isn't written yet`)}; //if hp < 1, game over
+function endgameLose(){
+  console.log(`Game Over, ${player.NAME} is knocked out of the race!`)
+};
 
 // -------------------- WIN GAME -------------------- //
-function checkOpponentsLeft(){console.log(`function checkOpponentsLeft ran - but isn't written yet`)}; //if opponentLeft.length == 0, player wins
+function checkContenders(){console.log(`function checkOpponentsLeft ran - but isn't written yet`)}; //if opponentLeft.length == 0, player wins
 
 
 //Call Shit
