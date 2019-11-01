@@ -80,31 +80,30 @@ var opponentsLeft = [ characters.Trump, characters.Sanders, characters.Warren, c
 var player; //this automatically evaluates to false
 var playerIsSelected = false;
 var opponentIsSelected = false;
-var opponent
+var opponent = false;
 
-//ok, this is a janky-ass thing, but:
-function countContenders(){
-  var contenders = 0;
-  if (characters.Trump.CONTENDER){contenders++;};
-  if (characters.Sanders.CONTENDER){contenders++;};
-  if (characters.Warren.CONTENDER){contenders++;};
-  if (characters.Biden.CONTENDER){contenders++;};
-  determineGame();
-  return contenders;
-};
-
-function determineGame() {
-  if (contenders <= 0){endgameWin();}
-}
+// ENABLES PLAYER TO WIN OR LOOSE:
+  //ok, this is a janky-ass thing, but it enables the player to win:
+  var contenders;
+  function countContenders(){
+    contenders = 0;
+    if (characters.Trump.CONTENDER){contenders++;};
+    if (characters.Sanders.CONTENDER){contenders++;};
+    if (characters.Warren.CONTENDER){contenders++;};
+    if (characters.Biden.CONTENDER){contenders++;};
+    determineGame();
+    return contenders;
+  };
+  function determineGame() {
+    if (contenders <= 0){endgameWin();}
+  }
 
 
 // ============================== NEW GAME: ============================== //
 
 
 function updateOpponentHP() { $(opponentCountsEL_HP).html(opponent.HP);};
-function checkOpponent() {
-if ($(opponent.HP) <= 0 ) {console.log("Opponent should be dead now.")} 
-}; 
+
 
 function updatePlayerHP()   {$(playerCountsEL_HP).html(player.HP);};
 function checkPlayerHP() { 
@@ -142,11 +141,11 @@ function choosePlayer (){
         updatePlayerAP(); 
 
 //Their Opponent:    
-    } else if (!opponentIsSelected){ 
+    } else if (!opponent){ 
         $(this).appendTo( battlefieldEL );
       // chosen enemy becomes "opponent"
         opponent = characters[this.id];
-        opponentIsSelected = true;
+        // opponentIsSelected = true;
       //Opponent's HP and AP are displayed
         opponentCounts.style.display = "block";
         updateOpponentHP();
@@ -168,6 +167,7 @@ function battle(){
 
   //display attack button
   $(controlButtonsEL).html( `<button type="button" class="btn btn-danger" id="attack-button">${player.ATTACK}</button>` );
+  controlButtonsEL.style.display = "block";
   round();
   
   function round() {
@@ -193,12 +193,28 @@ function battle(){
         //TODO: If opponent is dead, throw an alert.
           //if not, counter attack
 
-        counterAttack();
         //  is opponent dead? if (dead){ disposeBody(); } else { counterAttack(); }
       })
     }; 
 
-        
+
+    // CHECK TO SEE IF OPPONENT DIED
+    function checkOpponent() {
+      console.log(`we checked the opponent`);
+    if (opponent.HP <= 0 ) {
+      console.log("Opponent should be dead now.")
+
+      document.getElementById(opponent.NAME).style.display = "none";
+
+      opponent.CONTENDER  = false;
+      choosePlayer();
+      //TODO: hide the opponent's card?
+      opponent = false;
+      controlButtonsEL.style.display = "none";
+      opponentCounts.style.display = "none";
+    } else {counterAttack();};
+    }; 
+
 
       function counterAttack(){
         console.log(`counterAttack ran!`)
@@ -245,4 +261,4 @@ function battle(){
 
 
 //Call Shit
-initiateGame()
+initiateGame();
