@@ -31,8 +31,9 @@ var opponentCounts
 //DOM Controls
 var controlButtonsEL
   controlButtonsEL = document.getElementById("controlButtonSpace");
-  
-  
+  //TODO: refactor Reset Button to be a variable.
+  document.getElementById("restartButton").style.display = "none";  
+
 
 
 
@@ -45,7 +46,7 @@ var characters = {
     HP  : 1001,
     AP  : 101,
     CAP : 101,
-    ATTACK: "Tweet!",
+    ATTACK: "DUMB TWEET!!",
     CONTENDER : true
     },  
   Sanders : {
@@ -53,7 +54,7 @@ var characters = {
     HP  : 2002,
     AP  : 202,
     CAP : 202,
-    ATTACK: "Yell!!",
+    ATTACK: "Rant about capitalism!!",
     CONTENDER: true
     }, 
   Warren : {
@@ -61,7 +62,7 @@ var characters = {
     HP  : 3003,
     AP  : 303,
     CAP : 303,
-    ATTACK: "Plan!!",
+    ATTACK: "Make a plan!!",
     CONTENDER: true
     }, 
   Biden : {
@@ -69,7 +70,7 @@ var characters = {
     HP  : 4004,
     AP  : 404,
     CAP : 404,
-    ATTACK: "Tell a story!!",
+    ATTACK: "Mention Obama!!",
     CONTENDER: true
     }
   } 
@@ -79,12 +80,22 @@ var opponentsLeft = [ characters.Trump, characters.Sanders, characters.Warren, c
 var player; //this automatically evaluates to false
 var playerIsSelected = false;
 var opponentIsSelected = false;
-// var playerHP
-// var playerAP
 var opponent
-// var opponentHP
-// var opponentCAP
 
+//ok, this is a janky-ass thing, but:
+function countContenders(){
+  var contenders = 0;
+  if (characters.Trump.CONTENDER){contenders++;};
+  if (characters.Sanders.CONTENDER){contenders++;};
+  if (characters.Warren.CONTENDER){contenders++;};
+  if (characters.Biden.CONTENDER){contenders++;};
+  determineGame();
+  return contenders;
+};
+
+function determineGame() {
+  if (contenders <= 0){endgameWin();}
+}
 
 
 // ============================== NEW GAME: ============================== //
@@ -92,12 +103,12 @@ var opponent
 
 function updateOpponentHP() { $(opponentCountsEL_HP).html(opponent.HP);};
 function checkOpponent() {
-if ($(opponent.HP) > 0 ) {endgameLose();} 
+if ($(opponent.HP) <= 0 ) {console.log("Opponent should be dead now.")} 
 }; 
 
 function updatePlayerHP()   {$(playerCountsEL_HP).html(player.HP);};
 function checkPlayerHP() { 
-  if (player.HP > 0 ) {endgameLose();} 
+  if (player.HP <= 0 ) {endgameLose();} 
 }; 
 function updatePlayerAP()   {$(playerCountsEL_AP).html(player.AP);};
 
@@ -114,8 +125,8 @@ function initiateGame(){   //Displays opponentsLeft array in the DOM - at this p
   choosePlayer();
 };
 
-//Player can choose a character:
-
+//Player can chooses cards for...
+// Their character (var player)
 function choosePlayer (){
   $(`.characterCard`).on("click", function() {
     if (!playerIsSelected ) { //(IF PLAYER IS NOT SELECTED)
@@ -128,9 +139,9 @@ function choosePlayer (){
       //Player's HP and AP are displayed
         playerCounts.style.display = "block";
         updatePlayerHP();
-        updatePlayerAP();
+        updatePlayerAP(); 
 
-    //Selects Opponent:    
+//Their Opponent:    
     } else if (!opponentIsSelected){ 
         $(this).appendTo( battlefieldEL );
       // chosen enemy becomes "opponent"
@@ -163,21 +174,36 @@ function battle(){
 
     // --------------------    FIGHT    -------------------- //
     attack();
-    // .on(click attack button, function() {
+    
+    // PLAYER's ATTACK:
     function attack(){
       $(`#attack-button`).on("click", function(){
         opponent.HP -= player.AP;
+        player.AP += 100;
+        
         updateOpponentHP();
-        counterAttack();
-      })
+        alert(`Critical hit! ${opponent.NAME} took ${player.AP} damage!`);
+        
+        updatePlayerAP();
+        alert(`${player.NAME} gained some press, ${player.ATTACK} now does ${player.AP} damage!`);
 
-    }; 
-        // opponentHP is reduced by playerAP
+        checkOpponent();
+        countContenders();
+        //TODO: if all opponents are dead, end the game.
+        //TODO: If opponent is dead, throw an alert.
+          //if not, counter attack
+
+        counterAttack();
         //  is opponent dead? if (dead){ disposeBody(); } else { counterAttack(); }
+      })
+    }; 
+
+        
 
       function counterAttack(){
         console.log(`counterAttack ran!`)
-        alert(`${opponent.NAME} used ${opponent.ATTACK}!!`);
+        
+        alert(`${opponent.NAME} used ${opponent.ATTACK}, it was super effective! ${opponent.AP} damage!!`);
         player.HP -= opponent.AP;
         updatePlayerHP();
         checkPlayerHP();
@@ -201,12 +227,21 @@ function battle(){
 //============================== END GAME ============================== //
 
 // -------------------- LOOSE GAME -------------------- //
-function endgameLose(){
-  console.log(`Game Over, ${player.NAME} is knocked out of the race!`)
-};
+  function endgameLose(){
+    document.getElementById("playingField").style.display = "none";
+    document.getElementById("endgameMessage").innerHTML = "Well, ya lost - maybe go write a book like Hillary";
+    document.getElementById("restartButton").style.display = "block";
+    document.getElementById("restartButton").onclick = function() {location.reload()};
+  };
 
-// -------------------- WIN GAME -------------------- //
-function checkContenders(){console.log(`function checkOpponentsLeft ran - but isn't written yet`)}; //if opponentLeft.length == 0, player wins
+  // -------------------- WIN GAME -------------------- //
+  function endgameWin(){console.log(`endgameWIN ran`)
+    document.getElementById("playingField").style.display = "none";
+    document.getElementById("endgameMessage").innerHTML = "Well, you won - looks like 4 years of arguing with the house and senate.";
+    document.getElementById("restartButton").style.display = "block";
+    document.getElementById("restartButton").onclick = function() {location.reload()};
+  };
+
 
 
 //Call Shit
