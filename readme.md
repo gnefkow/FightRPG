@@ -20,5 +20,6 @@
 
 
 
-<h2> PUZZLES </h2>
-* ... no puzzles at the moment, just a lot of work ahead.
+<h2> To Do's </h2>
+* Draw some images
+* Adjust the character powers so that everyone can win
