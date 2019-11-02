@@ -44,6 +44,9 @@ body {
   font-size: 4em;
 }
 
+h1 {
+  font-size: 2em;
+}
 #opponentCounterContainer {
   z-index: 10;
   margin-bottom: -4em;
@@ -55,4 +58,26 @@ body {
   -webkit-box-shadow: 4px 0px 12px 0px rgba(50, 50, 50, 0.2);
   -moz-box-shadow:    4px 0px 12px 0px rgba(50, 50, 50, 0.2);
   box-shadow:         4px 0px 12px 0px rgba(50, 50, 50, 0.2);
+}
+
+
+.endgameModal {
+  width: 80%;
+  margin: 3em auto 3em auto;
+  padding: 3em;
+  text-align: center;
+  background-color: white;
+  -webkit-box-shadow: 4px 0px 12px 0px rgba(50, 50, 50, 0.2);
+  -moz-box-shadow:    4px 0px 12px 0px rgba(50, 50, 50, 0.2);
+  box-shadow:         4px 0px 12px 0px rgba(50, 50, 50, 0.2);
+}
+
+#restartButton {
+  padding: 1em 2em 1em 2em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-size: 2em;
+
 }

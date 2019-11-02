@@ -232,7 +232,8 @@ function battle(){
 
   //Hide Battle Elements:    
     document.getElementById("playingField").style.display = "none";
-    document.getElementById("endgameMessage").innerHTML = "Well, ya lost - maybe go write a book like Hillary";
+    document.getElementById("endgameTitle").innerHTML = "Well, ya lost,";
+    document.getElementById("endgameMessage").innerHTML = "...maybe go write a book like Hillary";
   
   //Display DOM Elements:  
     restartButton.style.display = "block";
@@ -246,7 +247,8 @@ function battle(){
     document.getElementById("playingField").style.display = "none"; 
     
   //Display DOM Elements:
-      document.getElementById("endgameMessage").innerHTML = "Well, you won - looks like 4 years of arguing with the house and senate.";
+      document.getElementById("endgameTitle").innerHTML = "Well, you won,";
+      document.getElementById("endgameMessage").innerHTML = "If you thought that was tough, just wait until you start the actual job.";
       restartButton.style.display = "block";
   };
 
