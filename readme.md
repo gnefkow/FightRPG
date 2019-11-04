@@ -7,7 +7,7 @@
 
 <h2>How is it made?</h2>
 <hr>
-<p>This is a simple front-end game made with jQuery</p>
+<p>This is a simple front-end game made with Javascript. A friend challenged me to (instead of using jQuery) code the whole thing with vanilla Javascript for practice, so, here it is!</p>
 <br>
 <br>
 

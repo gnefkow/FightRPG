@@ -2,13 +2,11 @@ $( document ).ready(function() {
 
 // DOM Elements: 
   //BATTLEFIELDS:
-    //These are the divs that the cards go in.
-    var playerSpotEL
-      playerSpotEL = document.getElementById("playerSpot"); 
-    var opponentPenEL
-      opponentPenEl = document.getElementById("opponentsLeftSpotList");
-    var battlefieldEL
-      battlefieldEL = document.getElementById("battlefieldSpot"); 
+    //These are the divs that the cards go in..
+    var playerSpotEL = document.getElementById("playerSpot"); 
+    var opponentPenEl = document.getElementById("opponentsLeftSpotList");
+    var battlefieldEL = document.getElementById("battlefieldSpot"); 
+      
 
   //SCOREBOARDS
     // Player Scoreboard:
@@ -94,9 +92,9 @@ $( document ).ready(function() {
       };
 
   // These functions update the counters during a fight:
-    function updateOpponentHP() { $(opponentCountsEL_HP).html(opponent.HP);};
-    function updatePlayerHP()   { $(playerCountsEL_HP).html(player.HP);};
-    function updatePlayerAP()   { $(playerCountsEL_AP).html(player.AP);};
+    function updateOpponentHP() { opponentCountsEL_HP.innerHTML = opponent.HP; };
+    function updatePlayerHP()   { playerCountsEL_HP.innerHTML = player.HP; };
+    function updatePlayerAP()   { playerCountsEL_AP.innerHTML = player.AP; };
 
   //Determine Game Outcome:
     function determineGame() {if (contenders <= 0){endgameWin();}};
@@ -114,8 +112,16 @@ $( document ).ready(function() {
   function initiateGame(){   
     //Displays opponentsLeft array in the DOM - at this point, it has all 4 characters
       for (var i = 0; i < opponentsLeft.length; i++) {
-        $( `<li id='${opponentsLeft[i].NAME}' class="characterCard"> ${opponentsLeft[i].NAME}</li>` ).appendTo( opponentPenEl );
-      }
+
+      // Creates the card for each in the opponentsLeft array:  
+      var populateOpponentPen = document.createElement("li");
+      populateOpponentPen.classList.add("characterCard");
+      populateOpponentPen.setAttribute("id", opponentsLeft[i].NAME);
+      populateOpponentPen.textContent = opponentsLeft[i].NAME;
+      opponentPenEl.appendChild(populateOpponentPen); 
+    };
+    
+
     //User can choose a player:
       choosePlayer();
     };
