@@ -1,4 +1,6 @@
-$( document ).ready(function() {
+$( document ).ready(function() {}); //document.ready closer
+
+
 
 // DOM Elements: 
   //BATTLEFIELDS:
@@ -125,11 +127,20 @@ $( document ).ready(function() {
     //User can choose a player:
       choosePlayer();
     };
-
+    
+    
+    
 
   //Player can chooses cards for...
   function choosePlayer (){
-    $(`.characterCard`).on("click", function() {
+    $(`.characterCard`).on("click", function() { //add back the last ")" if needed
+
+    // Trying (and failing) to replace with javascript:
+    // document.getElementsByClassName('characterCard').onclick = function(){ 
+    // document.querySelectorAll('.characterCard').onclick = function(){ 
+      
+      console.log("it works!");
+
 
       // Their character (var player):
       if (!player ) {
@@ -166,7 +177,7 @@ function battle(){
   console.log(`function battle ran`)
 
   //display attack button
-  $(controlButtonsEL).html( `<button type="button" class="btn btn-danger" id="attack-button">${player.ATTACK}</button>` );
+  controlButtonsEL.innerHTML = `<button type="button" class="btn btn-danger" id="attack-button">${player.ATTACK}</button>`;
   controlButtonsEL.style.display = "block";
   round();
   
@@ -177,7 +188,7 @@ function battle(){
     
     // PLAYER's ATTACK:
     function attack(){
-      $(`#attack-button`).on("click", function(){
+      document.getElementById(`attack-button`).onclick = function() {
         //Reduces Opponent HP:
           opponent.HP -= player.AP;
           updateOpponentHP();
@@ -186,7 +197,7 @@ function battle(){
           updatePlayerAP();
         //Check to see if this fight will continue:
           checkOpponent(); 
-      })
+      };
     }; 
 
 
@@ -263,4 +274,3 @@ function battle(){
 //Initialize
 initiateGame();
 
-}); //document.ready closer
