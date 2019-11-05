@@ -133,7 +133,7 @@ $( document ).ready(function() {
 
       // Their character (var player):
       if (!player ) {
-          $(this).appendTo( playerSpotEL );
+          playerSpotEL.appendChild(this);
         // The chosen character becomes var player
             player = characters[this.id];
             playerIsSelected = true;
@@ -145,12 +145,12 @@ $( document ).ready(function() {
 
   //Their Opponent:    
       } else if (!opponent){ 
-            $(this).appendTo( battlefieldEL );
+            battlefieldEL.appendChild(this);
         // chosen enemy becomes "opponent"
             opponent = characters[this.id];
             opponentCounts.style.display = "block";
             updateOpponentHP();
-            $(opponentCountsEL_AP).html(opponent.AP);
+            opponentCountsEL_AP.innerHTML = opponent.AP;
             battle();
             } 
     }); 
