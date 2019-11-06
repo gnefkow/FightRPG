@@ -21,5 +21,7 @@
 
 
 <h2> To Do's </h2>
+<hr>
 * Draw some images
 * Adjust the character powers so that everyone can win
+* Fix non-critical TypeError that is logged when opponent is defeated: "TypeError: Argument 1 of Node.appendChild does not implement interface Node." 
